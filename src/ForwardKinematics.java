@@ -37,7 +37,8 @@ public class ForwardKinematics {
 		
 		TwoDOFAnalyticalSolution first = new TwoDOFAnalyticalSolution(armLenC,armLenF);
 		TwoDOFAnalyticalSolution second = new TwoDOFAnalyticalSolution(armLenC,armLenF);
-		double distance, xd, yd;
+		TwoDOFAnalyticalSolution third = new TwoDOFAnalyticalSolution(armLenC,armLenF);
+		double d1, d2, d3, a1, a2, a3, xd, yd;
 
         System.out.println("Press to Record 1");
 		Button.waitForAnyPress();
@@ -50,13 +51,32 @@ public class ForwardKinematics {
 		
 		second.setThetaC(motorClose.getTachoCount()/7);
 		second.setThetaF(motorFar.getTachoCount());
+		
+	System.out.println("Press to Record 3");
+		Button.waitForAnyPress();
+		
+		third.setThetaC(motorClose.getTachoCount()/7);
+		third.setThetaF(motorFar.getTachoCount());
 
-		yd = first.getYe()-second.getYe();
-		xd = first.getXe()-second.getXe();
-		distance = Math.sqrt((xd*xd)+(yd*yd));
+		yd = second.getYe()-first.getYe();
+		xd = second.getXe()-first.getXe();
+		d1 = Math.sqrt((xd*xd)+(yd*yd));
 
-        System.out.println("F: " + motorFar.getTachoCount() + "deg");
-        System.out.println("C: " + motorClose.getTachoCount() + "deg");
+		yd = third.getYe()-second.getYe();
+		xd = third.getXe()-second.getXe();
+		d2 = Math.sqrt((xd*xd)+(yd*yd));
+
+		yd = first.getYe()-third.getYe();
+		xd = first.getXe()-third.getXe();
+		d3 = Math.sqrt((xd*xd)+(yd*yd));
+		
+		a3 = Math.acos(((d1*d1)-(d2*d2)-(d3*d3))/(2*d2*d3))*180/Math.PI;
+		a2 = Math.acos(((d3*d3)-(d2*d2)-(d1*d1))/(2*d2*d1))*180/Math.PI;
+		a1 = 180-a3-a2;
+
+        System.out.println("1to2 " + (int)d1 + " " + (int)a1);
+        System.out.println("2to3 " + (int)d2 + " " + (int)a2);
+        System.out.println("3to1 " + (int)d3 + " " + (int)a3);
         System.out.println("Distance: " + (int)distance + "mm");
 
 		Button.waitForAnyPress();
