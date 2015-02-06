@@ -16,14 +16,16 @@ public class InverseKinematics {
 	public static void main(String[] args) {
 //		int temp = 100;
 //		while(temp < 800){
-//			goHere(temp, 200);
+//			int[]angles =goHere(0, -100);
+//			motorFar.rotate(angles[1]);
+//			motorClose.rotate(angles[0]);
 //			temp+= 100;
 //		}
-//		int[]angles =goHere(100, -50);
-//		motorFar.rotate(angles[1]);
-//		motorClose.rotate(angles[0]);
-//		Button.waitForAnyPress();
-		midPoint();
+		int[]angles =goHere(100, -100);
+		motorFar.rotate(angles[1]);
+		motorClose.rotate(angles[0]);
+		Button.waitForAnyPress();
+//		midPoint();
 	}
 	
 	
@@ -56,7 +58,7 @@ public class InverseKinematics {
 	
 	public static void midPoint(){
 
-		double d, theta1, theta2, midx, midy, mvx, mvy;
+		double midx, midy;
 		TwoDOFAnalyticalSolution first = new TwoDOFAnalyticalSolution(armLenC,armLenF);
 		TwoDOFAnalyticalSolution second = new TwoDOFAnalyticalSolution(armLenC,armLenF);
 		
